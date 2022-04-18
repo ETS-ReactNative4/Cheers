@@ -1,0 +1,20 @@
+.footer-container {
+    /*background-color: #1c2237;*/
+    background: #3A3A3A;
+  
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+  }
+  
+  
+  .website-rights {
+    color: #fff;
+  }
+  
+
+
+  
