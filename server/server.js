@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));   // makes /api/users pertain to '/' in users.js
-// app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/auth', require('./routes/api/auth'));
 // app.use('/api/research', require('./routes/api/researchPosts'));
 // app.use('/api/publication', require('./routes/api/publicationPosts'));
 // app.use('/api/about', require('./routes/api/aboutPosts'));

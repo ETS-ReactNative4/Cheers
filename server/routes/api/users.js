@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-// const auth = require('../../middleware/auth');
+const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
@@ -35,7 +35,7 @@ router.post('/',
         try {
             // See if user exists
             mysqlPool.getConnection(function(err, mclient) {
-                let sql = `SELECT * FROM users WHERE email="${email}"`;
+                let sql = `SELECT * FROM users WHERE email="${email}" OR user_name="${user_name}"`;
                 mclient.query(sql, async (err, resp) => {
                     if (err) {
                         throw err;
