@@ -1,6 +1,6 @@
 To run the server:
 
-Ensure you have all dependencies by running `npm install`
+Ensure you have all dependencies by running `npm install` while in the `server/` directory
 
 Then, go to server/config/default.json and in the "mysql" object, insert the hostname, user, and password in order for the server to have the credentials
 to connect to your local mysql instance of cheers_db.
