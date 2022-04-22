@@ -1,0 +1,9 @@
+{
+    "mysql": {
+        "host": "localhost",
+        "user": "root",
+        "password": "INSERT YOUR PASSWORD HERE",
+        "database": "cheers_db"
+    },
+    "jwtSecret": "mysecrettoken"
+}
