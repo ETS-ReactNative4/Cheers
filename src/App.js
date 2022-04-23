@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 // import ResearchPage from "./pages/ResearchPage";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 // import AboutPage from "./pages/AboutPage";
 // import PublicationsPage from "./pages/PublicationsPage";
 // import ContactPage from "./pages/ContactPage";
@@ -63,6 +64,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route path="/login" exact component={Login} />
+            <Route path="/signup" exact component={SignUp} />
             <Route path="/create" exact component={PostCreateView} />
             {/* <Route path="/research" exact component={ResearchPage} />
             <Route path="/about" exact component={AboutPage} />

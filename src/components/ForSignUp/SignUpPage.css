@@ -1,0 +1,54 @@
+.SignUpPage {
+    /* background-image: url('/img/background.jpg'); */
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userName {
+    margin-top: .5rem;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 3px;
+
+}
+
+.email {
+    margin-top: .5rem;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 3px;
+
+}
+
+.firstName {
+    margin-top: .5rem;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 3px;
+
+}
+
+.lastName {
+    margin-top: .5rem;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 3px;
+
+}
+
+.checkbox {
+    margin-top: .5rem;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 3px;
+
+}
+
+.password {
+    margin-top: .5rem;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 3px;
+}
