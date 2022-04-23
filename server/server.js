@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 // Connect database
 var mysqlPool = require("./mysqlPool");
 mysqlPool.getConnection(function(err, mclient) {
+    if (err) {
+      throw err;
+    }
     let sql = "SELECT user_name FROM users";
     mclient.query(sql, (err, resp) => {
         if (err) {
