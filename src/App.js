@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import GlobalStyle from "./globalStyles";
 import Footer from "./components/Footer/Footer";
 // import DetailView from "./components/Research/post/DetailView";
-// import ResearchCreateView from "./components/Research/post/ResearchCreateView";
+import PostCreateView from "./components/ForHome/PostCreateView";
 // import ResearchEditView from "./components/Research/post/ResearchEditView";
 // import PublicationCreateView from "./components/Publications/post/PublicationCreateView";
 // import PublicationEditView from "./components/Publications/post/PublicationEditView";
@@ -63,6 +63,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route path="/login" exact component={Login} />
+            <Route path="/create" exact component={PostCreateView} />
             {/* <Route path="/research" exact component={ResearchPage} />
             <Route path="/about" exact component={AboutPage} />
             <Route path="/publications" exact component={PublicationsPage} />

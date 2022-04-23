@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles({
     create: {
         margin: 20,
-        background: "#2E8B57",
+        background: "#ff6f61",
         width: "86%",
         color: "#FFFFFF",
     },
@@ -26,13 +26,13 @@ const useStyles = makeStyles({
     },
     row: {
         "&:active": {
-            background: "#D3D3D3",
+            background: "#ff8a80",
             border: "1px"
         },
         "&:hover": {
             transition: "all 0.4s ease 0s",
-            background: "#D3D3D3",
-            color: "#010606"
+            background: "#ff8a80",
+            color: "#ff8a80"
         },
         cursor: "pointer"
     }
@@ -43,13 +43,13 @@ const Filter = ({ filters, setPosts, filterPostsFromDatabase, getPostsFromDataba
     const classes = useStyles();
     return (
         <>
-            {localStorage.token && (
-                <Link to={createLink} className={classes.link}>
-                    <Button variant="contained" className={classes.create}>
-                        New Post
-                    </Button>
-                </Link>
-            )}
+            {/* {localStorage.token && ( */}
+            <Link to={createLink} className={classes.link}>
+                <Button variant="contained" className={classes.create}>
+                    New Post
+                </Button>
+            </Link>
+            {/* )} */}
 
             <Table className={classes.table}>
                 <TableHead>
