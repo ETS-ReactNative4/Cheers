@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 // Connect database
 var mysqlPool = require("./mysqlPool");
 mysqlPool.getConnection(function(err, mclient) {
+    if (err) {
+      throw err;
+    }
     let sql = "SELECT user_name FROM users";
     mclient.query(sql, (err, resp) => {
         if (err) {
@@ -27,9 +30,12 @@ app.get('/', (req, res) => {
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));   // makes /api/users pertain to '/' in users.js
 app.use('/api/auth', require('./routes/api/auth'));
-// app.use('/api/research', require('./routes/api/researchPosts'));
-// app.use('/api/publication', require('./routes/api/publicationPosts'));
-// app.use('/api/about', require('./routes/api/aboutPosts'));
+app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/drink_categories', require('./routes/api/drink_categories'));
+app.use('/api/recipes', require('./routes/api/recipes'));
+app.use('/api/messages', require('./routes/api/messages'));
+app.use('/api/ingredients', require('./routes/api/ingredients'));
+app.use('/api/uses', require('./routes/api/uses'));
 
 const PORT = process.env.PORT || 5000;
 
