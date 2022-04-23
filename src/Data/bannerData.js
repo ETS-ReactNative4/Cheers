@@ -32,7 +32,21 @@ export const signUpBanner = {
     lightTopLine: true,
     lightTextDesc: true,
     description: 'Sign up for Cheers! to share your favorite drink recipes and learn about what others have to offer!',
-    headline: 'Login',
+    headline: 'Sign Up',
+    lightText: 'true',
+    topLine: 'Cheers!',
+    alt: 'Image',
+    img: '',
+    start: ''
+}
+
+export const reportsBanner = {
+    lightBg: false,
+    imgStart: '',
+    lightTopLine: true,
+    lightTextDesc: true,
+    description: 'Application Users Management',
+    headline: 'Administrative Reports',
     lightText: 'true',
     topLine: 'Cheers!',
     alt: 'Image',

@@ -16,6 +16,7 @@ const Posts = (props) => {
                 rating={post.rating}
                 ingredients={post.ingredients}
                 instructions={post.instructions}
+            // id={post.id}
             />
         </Grid>
     ));

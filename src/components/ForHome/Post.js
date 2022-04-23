@@ -1,9 +1,9 @@
 import { Typography, makeStyles, Button } from "@material-ui/core";
 import styled from "styled-components";
 // import LinesEllipsis from 'react-lines-ellipsis'
-// import { Link } from "react-router-dom";
-// import EditIcon from '@mui/icons-material/Edit';
-// import Delete from '../Delete/Delete';
+import { Link } from "react-router-dom";
+import EditIcon from '@mui/icons-material/Edit';
+import Delete from '../Delete/Delete.js';
 
 const useStyles = makeStyles({
     container: {
@@ -59,31 +59,38 @@ const useStyles = makeStyles({
 });
 
 //Individual Post component
-const Post = ({ title, user, rating, ingredients, instructions, id, img, date }) => {
+const Post = ({ title, user, rating, ingredients, instructions, drinkCategory, id, img, date }) => {
+
+    // Need drinkCategory and id
+
     const classes = useStyles();
 
     return (
         <BoxContainer>
-            {/* {localStorage.token && (
-                <div className={classes.buttonContainer}>
-                    <Delete deleteEndpoint={`/api/post/${id}`} />
-                    <Link
-                        to={`/research/edit/${id}`}
-                        style={{ textDecoration: "none", color: "inherit" }}
+
+            {/* {localStorage.token && ( */}
+
+            {/* Only if the post belongs to the user that is logged in */}
+
+            <div className={classes.buttonContainer}>
+                <Delete deleteEndpoint={`/api/post/${id}`} />
+                <Link
+                    to={`/edit/${id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                >
+                    <Button
+                        variant="outlined"
+                        startIcon={<EditIcon />}
+                        size="small"
+                        onClick={() => {
+                            console.log("edit");
+                        }}
                     >
-                        <Button
-                            variant="outlined"
-                            startIcon={<EditIcon />}
-                            size="small"
-                            onClick={() => {
-                                console.log("edit");
-                            }}
-                        >
-                            Edit
-                        </Button>
-                    </Link>
-                </div>
-            )} */}
+                        Edit
+                    </Button>
+                </Link>
+            </div>
+            {/* )} */}
             <div className={classes.container}>
 
                 <img src={img} alt="wrapper" className={classes.image} />
