@@ -25,3 +25,17 @@ export const loginBanner = {
     img: '',
     start: ''
 }
+
+export const signUpBanner = {
+    lightBg: false,
+    imgStart: '',
+    lightTopLine: true,
+    lightTextDesc: true,
+    description: 'Sign up for Cheers! to share your favorite drink recipes and learn about what others have to offer!',
+    headline: 'Login',
+    lightText: 'true',
+    topLine: 'Cheers!',
+    alt: 'Image',
+    img: '',
+    start: ''
+}
