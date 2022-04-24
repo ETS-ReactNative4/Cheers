@@ -43,13 +43,13 @@ const SignUpForm = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState("false");
     const [ofAge, setOfAge] = useState(false);
     const [valid, setValid] = useState(true);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const credentials = { userName, email, firstName, lastName, password };
+        const credentials = { userName, firstName, lastName, email, password, isAdmin };
         await signUp(credentials);
     }
 
@@ -141,17 +141,17 @@ const SignUpForm = () => {
 
 
     async function signUp(credentials) {
-        // try {
-        //     const res = await axios.post("/api/auth", credentials);
-        //     const jwt = res.data.token
-        //     localStorage.setItem("token", jwt);
-        //     window.location.href = "/";
-        // }
-        // catch (e) {
-        //     console.error("ERROR", e);
-        //     localStorage.removeItem("token");
-        //     setValid(false);
-        // }
+        try {
+            const res = await axios.post("/api/users", credentials);
+            const jwt = res.data.token
+            localStorage.setItem("token", jwt);
+            window.location.href = "/";
+        }
+        catch (e) {
+            console.error("ERROR", e);
+            localStorage.removeItem("token");
+            setValid(false);
+        }
     }
 }
 
