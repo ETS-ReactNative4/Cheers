@@ -46,6 +46,6 @@ async function getUserFromDatabase() {
       headers: { "Content-Type": "application/json" },
     });
     return res.data;
-  }
+}
 
 export default Posts;
