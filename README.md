@@ -13,7 +13,7 @@ In the same directory as this README file, run the following commands:
 In a separate terminal from the one that is running the user interface (React front end), Perform the following tasks:
 1. `cd server/`
 2. `npm install`
-3. Edit config/default.json so that the "password" field in the "mysql" object contains the password to the user specified in "user". If you do not wish to log in as your local machine's root user, you will have to change the "user" field as well - make sure the password corresponds to whichever user you specify. 
+3. Edit config/default.json so that the "password" field in the "mysql" object contains the password to the local MYSQL user specified in "user". If you do not wish to log in as your local machine's root user, you will have to change the "user" field as well - make sure the password corresponds to whichever user you specify. 
 4. `npm run dev`
 
 <!-- Ensure you have all dependencies by running npm install while in the server/ directory
