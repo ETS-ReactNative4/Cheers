@@ -9,6 +9,7 @@ import GlobalStyle from "./globalStyles";
 import Footer from "./components/Footer/Footer";
 import PostCreateView from "./components/ForHome/PostCreateView";
 import AnnouncementCreateView from "./components/ForHome/AnnouncementCreateView";
+import EditUserView from "./components/Navbar/EditUserView";
 
 import EditView from "./components/ForHome/EditView";
 import Reports from "./pages/Reports";
@@ -63,6 +64,7 @@ function App() {
             <Route path="/edit/:id" exact component={EditView} />
             <Route path="/reports" exact component={Reports} />
             <Route path="/announcementCreateView" exact component={AnnouncementCreateView} />
+            <Route path="/editUserView" exact component={EditUserView} />
 
 
             {/* <Route path="/research" exact component={ResearchPage} />
