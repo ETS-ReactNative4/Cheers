@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Typography, makeStyles, Button } from "@material-ui/core";
 import styled from "styled-components";
 import axios from "axios";
@@ -62,7 +62,7 @@ const useStyles = makeStyles({
 
 //Individual Post component
 
-const Post = ({ title, user, rating, category, instructions, recipe_id, img, date }) => {
+const Post = ({ title, user, rating, category, instructions, recipe_id, post_id, img, date, currentUser }) => {
     const classes = useStyles();
     const [ingredients, setIngredients] = useState([]);
     useEffect(() => {
@@ -74,33 +74,35 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, img, dat
         fetchData();
       }, []);
 
-    
+    //   console.log(`${user} comparing to ${currentUser.user_name}`)
+    //   console.log(user === currentUser.user_name || currentUser.is_admin === 1)
 
     return (
         <BoxContainer>
-
+            {/* Only if the post belongs to the user that is logged in or is admin */}
             {/* {localStorage.token && ( */}
-
-            {/* Only if the post belongs to the user that is logged in */}
-
-            <div className={classes.buttonContainer}>
-                <Delete deleteEndpoint={`/api/post/${id}`} />
-                <Link
-                    to={`/edit/${id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                >
-                    <Button
-                        variant="outlined"
-                        startIcon={<EditIcon />}
-                        size="small"
-                        onClick={() => {
-                            console.log("edit");
-                        }}
-                    >
-                        Edit
-                    </Button>
-                </Link>
-            </div>
+            {user === currentUser.user_name || currentUser.is_admin === 1 && (
+                <div className={classes.buttonContainer}>
+                    <Fragment>
+                        <Delete deleteEndpoint={`/api/post/${post_id}`} />
+                        <Link
+                            to={`/edit/${post_id}`}
+                            style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                            <Button
+                                variant="outlined"
+                                startIcon={<EditIcon />}
+                                size="small"
+                                onClick={() => {
+                                    console.log("edit");
+                                }}
+                            >
+                                Edit
+                            </Button>
+                        </Link>
+                    </Fragment>
+                </div>
+            )}
             {/* )} */}
             <div className={classes.container}>
 
