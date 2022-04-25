@@ -29,8 +29,8 @@ router.get("/", auth, async (req, res) => {
 
 // @route   GET api/posts/all
 // @desc    Get all posts with recipe and ingredient data joined
-// @access  Private
-router.get("/all", auth, async (req, res) => {
+// @access  Public
+router.get("/all", async (req, res) => {
   try {
   //   const posts = await Post.find().sort({ date: -1 }); // -1 is sort by most recent
     mysqlPool.getConnection(function(err, mclient) {

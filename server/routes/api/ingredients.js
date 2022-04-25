@@ -29,8 +29,8 @@ router.get("/", auth, async (req, res) => {
 
 // @route   GET api/ingredients/:id
 // @desc    Get all ingredients used in a recipe
-// @access  Private
-router.get("/:id", auth, async (req, res) => {
+// @access  Public
+router.get("/:id", async (req, res) => {
   try {
     // console.log(req.params.id)
     mysqlPool.getConnection(function(err, mclient) {

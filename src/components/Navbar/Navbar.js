@@ -4,7 +4,7 @@ import { FaBars } from 'react-icons/fa';
 import { Nav, NavLink, NavMenu, NavBtn, NavBtnLink, NavLogo, MobileIcon, NavIcon } from './NavbarElements'
 
 function Navbar({ toggle }) {
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState({});
     useEffect(() => {
         async function fetchData() {
         // Get data
@@ -37,9 +37,11 @@ function Navbar({ toggle }) {
                             Sign Up
                         </NavLink> 
                     )}
-                    <NavLink to="/reports" activeStlye>
-                        Reports
-                    </NavLink>
+                    { user.is_admin === 1 && (
+                        <NavLink to="/reports" activeStlye>
+                            Reports
+                        </NavLink>
+                    )}
                 </NavMenu>
                 {!localStorage.token && (
                     <NavBtn>

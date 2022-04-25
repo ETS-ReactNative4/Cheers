@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from "axios";
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -22,28 +23,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
-// Function to create data rows for each user
-function createData(userName, email, firstName, lastName, password, isAdmin) {
-  return {
-    userName,
-    email,
-    firstName,
-    lastName,
-    password,
-    isAdmin
-  };
-}
-
-// Dummy data for fake users
-const rows = [
-  createData('cheers_james', 'cheers_james@gmail.com', 'James', 'Kim', 'password', true),
-  createData('cheers_bryant', 'cheers_bryant@gmail.com', 'Bryant', 'Nguyen', 'password', true),
-  createData('cheers_sponge', 'cheers_yellowDude@gmail.com', 'Spongebob', 'Squarepants', 'password', false),
-  createData('cheers_patrick', 'cheers_pinkGuy@gmail.com', 'Patrick', 'Star', 'password', false),
-  createData('cheers_euKrabs', 'cheers_claws@gmail.com', 'Eugene', 'Krabs', 'password', false)
-
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -78,7 +57,7 @@ function stableSort(array, comparator) {
 // Cell headings
 const headCells = [
   {
-    id: 'userName',
+    id: 'user_name',
     numeric: false,
     disablePadding: true,
     label: 'User Name',
@@ -90,25 +69,19 @@ const headCells = [
     label: 'Email Address',
   },
   {
-    id: 'firstName',
+    id: 'first_name',
     numeric: false,
     disablePadding: false,
     label: 'First Name',
   },
   {
-    id: 'lastName',
+    id: 'last_name',
     numeric: false,
     disablePadding: false,
     label: 'Last Name',
   },
   {
-    id: 'password',
-    numeric: false,
-    disablePadding: false,
-    label: 'Password',
-  },
-  {
-    id: 'isAdmin',
+    id: 'is_admin',
     numeric: false,
     disablePadding: false,
     label: 'Administrator',
@@ -172,7 +145,41 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, selected } = props;
+
+  async function deleteSelectedUsers() {
+    try {
+      selected.forEach(async (selectedUser) => {
+        console.log(selectedUser);
+        await axios({
+          method: "delete",
+          url: `/api/users/${selectedUser}`,
+          headers: { "Content-Type": "application/json" },
+        });
+      });
+      window.location.href = window.location.href;
+    }
+    catch (err) {
+      console.error(err.message)
+    }
+  }
+
+  async function promoteSelectedUsers() {
+    try {
+      selected.forEach(async (selectedUser) => {
+        console.log(selectedUser);
+        await axios({
+          method: "PUT",
+          url: `/api/users/${selectedUser}`,
+          headers: { "Content-Type": "application/json" },
+        });
+      });
+      window.location.href = window.location.href;
+    }
+    catch (err) {
+      console.error(err.message)
+    }
+  }
 
   return (
     <Toolbar
@@ -208,19 +215,8 @@ const EnhancedTableToolbar = (props) => {
       {numSelected > 0 ? (
 
         <Tooltip title="Remove">
-          <IconButton>
+          <IconButton onClick={() => deleteSelectedUsers()}>
             <DeleteIcon />
-            {/*
-            
-            Delete function to remove selected users
-            
-
-
-
-
-
-
-            */}
           </IconButton>
         </Tooltip>
 
@@ -236,21 +232,8 @@ const EnhancedTableToolbar = (props) => {
 
         <div>
           <Tooltip title="Grant Admin">
-            <IconButton>
+            <IconButton onClick={() => promoteSelectedUsers()}>
               <AdminPanelSettingsIcon />
-              {/*
-            
-            Function to grant admin priviledges to users
-            
-
-
-
-
-
-
-
-            
-            */}
             </IconButton>
           </Tooltip>
         </div>
@@ -267,6 +250,43 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function ReportsPage() {
+  const [user, setUser] = React.useState({});
+  const [rows, setRows] = React.useState([]);
+    React.useEffect(() => {
+        async function fetchData() {
+        // Get data
+        const res = await getCurrentUserFromDatabase();
+        setUser(res[0]);
+        }
+        if (localStorage.token) {
+            fetchData();
+        }
+
+        async function fetchUsers() {
+          const res = await getUsersFromDatabase();
+          setRows(res);
+        }
+        fetchUsers();
+    }, []);
+
+  async function getCurrentUserFromDatabase() {
+    const res = await axios({
+      method: "get",
+      url: "/api/auth",
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data;
+  }
+
+  async function getUsersFromDatabase() {
+    const res = await axios({
+      method: "get",
+      url: "/api/users",
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data;
+  }
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('userName');
 
@@ -334,7 +354,7 @@ export default function ReportsPage() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -355,17 +375,17 @@ export default function ReportsPage() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.userName);
+                  const isItemSelected = isSelected(row.user_name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.userName)}
+                      onClick={(event) => handleClick(event, row.user_name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.userName}
+                      key={row.user_name}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -383,13 +403,13 @@ export default function ReportsPage() {
                         scope="row"
                         padding="none"
                       >
-                        {row.userName}
+                        {row.user_name}
                       </TableCell>
                       <TableCell align="left">{row.email}</TableCell>
-                      <TableCell align="left">{row.firstName}</TableCell>
-                      <TableCell align="left">{row.lastName}</TableCell>
-                      <TableCell align="left">{row.password}</TableCell>
-                      <TableCell align="left">{row.isAdmin ? "Yes" : "No"}</TableCell>
+                      <TableCell align="left">{row.first_name}</TableCell>
+                      <TableCell align="left">{row.last_name}</TableCell>
+                      {/* <TableCell align="left">{row.password}</TableCell> */}
+                      <TableCell align="left">{row.is_admin === 1 ? "Yes" : "No"}</TableCell>
                     </TableRow>
                   );
                 })}
