@@ -61,7 +61,7 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/create" exact component={PostCreateView} />
-            <Route path="/edit" exact component={EditView} />
+            <Route path="/edit/:id" exact component={EditView} />
             <Route path="/reports" exact component={Reports} />
             <Route path="/announcementCreateView" exact component={AnnouncementCreateView} />
             <Route path="/editUserView" exact component={EditUserView} />
