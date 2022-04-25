@@ -60,20 +60,23 @@ const Filter = ({ filters, setPosts, filterPostsFromDatabase, getPostsFromDataba
                         </TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                    {filters.map((c) => (
-                        <TableRow className={classes.row}>
-                            <TableCell onClick={() => update(c)}>{c}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
+                {localStorage.token && (
+
+                    <TableBody>
+                        {filters.map((c) => (
+                            <TableRow className={classes.row}>
+                                <TableCell onClick={() => update(c)}>{c}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                )}
             </Table>
         </>
     );
 
     async function update(filter) {
-          let myPosts = await getMyPostsFromDatabase();
-          setPosts(myPosts);
+        let myPosts = await getMyPostsFromDatabase();
+        setPosts(myPosts);
     }
 
     async function allPosts(filter) {
@@ -83,13 +86,13 @@ const Filter = ({ filters, setPosts, filterPostsFromDatabase, getPostsFromDataba
 
     async function getMyPostsFromDatabase() {
         const res = await axios({
-          method: "get",
-          url: "/api/posts/my",
-          headers: { "Content-Type": "application/json" },
+            method: "get",
+            url: "/api/posts/my",
+            headers: { "Content-Type": "application/json" },
         });
         let posts = res.data
         return posts;
-      }
+    }
 };
 
 export default Filter;
