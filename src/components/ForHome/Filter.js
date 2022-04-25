@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 //Styling using Material UI React
 const useStyles = makeStyles({
@@ -71,14 +72,24 @@ const Filter = ({ filters, setPosts, filterPostsFromDatabase, getPostsFromDataba
     );
 
     async function update(filter) {
-        //   let filteredPosts = await filterPostsFromDatabase(category);
-        //   setPosts(filteredPosts);
+          let myPosts = await getMyPostsFromDatabase();
+          setPosts(myPosts);
     }
 
-    async function allPosts() {
-        //   const allPosts = await getPostsFromDatabase();
-        //   setPosts(allPosts);
+    async function allPosts(filter) {
+        let posts = await getPostsFromDatabase();
+        setPosts(posts);
     }
+
+    async function getMyPostsFromDatabase() {
+        const res = await axios({
+          method: "get",
+          url: "/api/posts/my",
+          headers: { "Content-Type": "application/json" },
+        });
+        let posts = res.data
+        return posts;
+      }
 };
 
 export default Filter;
