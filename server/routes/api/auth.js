@@ -19,6 +19,7 @@ router.get('/', auth, async (req, res) => {
         mysqlPool.getConnection(function(err, mclient) {
             let sql = `SELECT * FROM users WHERE user_name="${req.user.id}"`;
             mclient.query(sql, async (err, resp) => {
+                mclient.release();
                 if (err) {
                     throw err;
                 }
@@ -56,6 +57,7 @@ router.post('/',
             mysqlPool.getConnection(function(err, mclient) {
                 let sql = `SELECT * FROM users WHERE email="${email}"`;
                 mclient.query(sql, async (err, resp) => {
+                    mclient.release();
                     if (err) {
                         throw err;
                     }

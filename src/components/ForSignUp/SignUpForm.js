@@ -49,7 +49,7 @@ const SignUpForm = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const credentials = { userName, email, firstName, lastName, password };
+        const credentials = { user_name: userName, email, first_name: firstName, last_name: lastName, password, is_admin: 0 };
         await signUp(credentials);
     }
 
@@ -141,17 +141,17 @@ const SignUpForm = () => {
 
 
     async function signUp(credentials) {
-        // try {
-        //     const res = await axios.post("/api/auth", credentials);
-        //     const jwt = res.data.token
-        //     localStorage.setItem("token", jwt);
-        //     window.location.href = "/";
-        // }
-        // catch (e) {
-        //     console.error("ERROR", e);
-        //     localStorage.removeItem("token");
-        //     setValid(false);
-        // }
+        try {
+            const res = await axios.post("/api/users", credentials);
+            const jwt = res.data.token
+            localStorage.setItem("token", jwt);
+            window.location.href = "/";
+        }
+        catch (e) {
+            console.error("ERROR", e);
+            localStorage.removeItem("token");
+            setValid(false);
+        }
     }
 }
 
