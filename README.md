@@ -1,3 +1,31 @@
+# How to start the Cheers Application
+To start the Cheers Application, you will have to start 2 separate npm projects - one for the React front end and one for the Node back end that connects to the local MYSQL Database.
+
+First, make sure you import the SQL dump that was submitted with the project files into your local MYSQL server - as a result, you should have a database in your MYSQL Server named `cheers_db` with tables `drink_category, ingredients, messages, posts, recipes, users, uses`.
+
+### Running the user interface:
+In the same directory as this README file, run the following commands:
+1. `npm install`
+2. `npm start`
+
+
+### Running the server:
+In a separate terminal from the one that is running the user interface (React front end), Perform the following tasks:
+1. `cd server/`
+2. `npm install`
+3. Edit config/default.json so that the "password" field in the "mysql" object contains the password to the user specified in "user". If you do not wish to log in as your local machine's root user, you will have to change the "user" field as well - make sure the password corresponds to whichever user you specify. 
+4. `npm run dev`
+
+<!-- Ensure you have all dependencies by running npm install while in the server/ directory
+
+Then, go to server/config/default.json and in the "mysql" object, insert the hostname, user, and password in order for the server to have the credentials to connect to your local mysql instance of cheers_db.
+
+Finally, run npm run dev. The server should start up and print "Listening on port 5000" as well as "SQL Connected!". It should also print a test SQL statement found in server.js on line 7, which is SELECT user_name FROM users. -->
+
+If trouble with permissions when using root user:
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'your new password'; ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your new password';
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
