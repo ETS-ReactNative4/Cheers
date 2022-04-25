@@ -22,7 +22,7 @@ Then, go to server/config/default.json and in the "mysql" object, insert the hos
 
 Finally, run npm run dev. The server should start up and print "Listening on port 5000" as well as "SQL Connected!". It should also print a test SQL statement found in server.js on line 7, which is SELECT user_name FROM users. -->
 
-If trouble with permissions when using root user:
+If trouble with permissions when using root user, in a new terminal, go into the MYSQL Command-Line Client and run the following commands:
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'your new password'; ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your new password';
 
