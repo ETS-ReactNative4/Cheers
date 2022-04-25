@@ -98,7 +98,7 @@ const EditUserView = () => {
         }
 
         // Create form object and send request
-        const body = { user_name: user.user_name, email: user.email, first_name: newFirstName, last_name: newLastName, password: newPassword, is_admin: user.is_admin };
+        //const body = { user_name: user.user_name, email: user.email, first_name: newFirstName, last_name: newLastName, password: newPassword, is_admin: user.is_admin };
 
         axios
             //.put(`/api/post/${postId}`, body) CHANGE

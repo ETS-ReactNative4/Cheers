@@ -59,7 +59,7 @@ function Navbar({ toggle }) {
                             Log Out
                         </NavBtnLink>
                         <Link
-                            //to={`/edit/${post_id}`}
+                            to={"/editUserView"}
                             style={{ textDecoration: "none", color: "white", padding: "1rem" }}
                         >
                             <Button
