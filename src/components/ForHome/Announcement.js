@@ -20,6 +20,7 @@ const useStyles = makeStyles({
 const Announcement = ({ name, topic, message, date, id }) => {
   const classes = useStyles();
 
+
   return (
     <CardStyled>
       <div className="content">
@@ -27,7 +28,7 @@ const Announcement = ({ name, topic, message, date, id }) => {
           <div className={classes.buttonContainer}>
             {/* <Delete deleteEndpoint={`/api/about/${id}`} /> */}
             <Link
-              to={`/about/edit/${id}`}
+              to={`/announcementCreateView`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Button

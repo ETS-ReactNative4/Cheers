@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import {
     Box,
     Typography,
@@ -48,8 +49,7 @@ const useStyle = makeStyles((theme) => ({
         margin: "0.8rem 0 0 0.6rem"
     },
     button: {
-        marginTop: "2rem",
-
+        marginTop: "2rem"
     },
     warning: {
         fontSize: '14px',
@@ -57,26 +57,34 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-const AnnouncementCreateView = () => {
+const EditUserView = () => {
     const classes = useStyle();
-    const [title, setTitle] = useState("");
+    const userId = window.location.href.split("/edit/user/")[1]; // CHANGE
+
     const [user, setUser] = useState("");
-    const [message, setMessage] = useState("");
+    const [newFirstName, setNewFirstName] = useState("");
+    const [newLastName, setNewLastName] = useState("");
+    const [newPassword, setNewPassword] = useState("");
     const [valid, setValid] = useState(true);
+
+    useEffect(async () => {
+        const res = await getUser(userId);
+        setUser(res);
+        setNewFirstName(res.first_Name);
+        setNewLastName(res.last_Name);
+        setNewPassword(res.password);
+    }, []);
 
     const isEmptyField = str => {
         return !str || !str.trim().length;
     }
 
-    // const onChangeFile = e => {
-    //     setFileName(e.target.files[0]);
-    // }
 
     const validate = () => {
         let isValid = true;
-        if (isEmptyField(title)) { isValid = false }
-        else if (isEmptyField(user)) { isValid = false }
-        else if (isEmptyField(message)) { isValid = false }
+        if (isEmptyField(newFirstName)) { isValid = false }
+        else if (isEmptyField(newLastName)) { isValid = false }
+        else if (isEmptyField(newPassword)) { isValid = false }
 
         setValid(isValid);
         return isValid;
@@ -89,21 +97,13 @@ const AnnouncementCreateView = () => {
             return;
         }
 
-        const current = new Date();
-        const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
-
         // Create form object and send request
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("user", user);
-        formData.append("ingredients", message);
-        formData.append("date", date);
+        const body = { user_name: user.user_name, email: user.email, first_name: newFirstName, last_name: newLastName, password: newPassword, is_admin: user.is_admin };
 
-
-        // axios
-        //     .post("/api/research", formData)
-        //     .then((res) => console.log("saved! " + res.data))
-        //     .catch((err) => console.log(err));
+        axios
+            //.put(`/api/post/${postId}`, body) CHANGE
+            .then((res) => console.log("saved! " + res.data))
+            .catch((err) => console.log(err));
     }
 
     return (
@@ -112,33 +112,33 @@ const AnnouncementCreateView = () => {
             <form className={classes.form} encType="multipart/form-data">
                 {/* <AddCircle fontSize="large" color="action" /> */}
                 <TextField
-                    error={isEmptyField(title)}
-                    helperText={isEmptyField(title) ? "Required field" : ""}
+                    error={isEmptyField()}
+                    helperText={isEmptyField(newFirstName) ? "Required field" : ""}
                     variant="outlined"
-                    placeholder="Title"
+                    placeholder="Enter new first name"
                     className={classes.textField}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-
-                <TextField
-                    error={isEmptyField(user)}
-                    helperText={isEmptyField(user) ? "Required field" : ""}
-                    variant="outlined"
-                    placeholder="User"
-                    className={classes.textField}
-                    onChange={(e) => setUser(e.target.value)}
+                    onChange={(e) => setNewFirstName(e.target.value)}
                 />
 
                 <TextField
                     error={isEmptyField()}
-                    helperText={isEmptyField(message) ? "Required field" : ""}
-                    multiline
+                    helperText={isEmptyField(newLastName) ? "Required field" : ""}
                     variant="outlined"
-                    placeholder="Message..."
+                    placeholder="Enter new last name"
                     className={classes.textField}
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e) => setNewLastName(e.target.value)}
                 />
 
+
+                <TextField
+                    error={isEmptyField()}
+                    helperText={isEmptyField(newPassword) ? "Required field" : ""}
+                    multiline
+                    variant="outlined"
+                    placeholder="Enter new password"
+                    className={classes.textField}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                />
 
 
                 <Button
@@ -147,7 +147,7 @@ const AnnouncementCreateView = () => {
                     className={classes.button}
                     onClick={submit}
                 >
-                    Post
+                    Save changes
                 </Button>
                 {!valid && (
                     <div className={classes.warning}>Required fields are missing!</div>
@@ -157,4 +157,13 @@ const AnnouncementCreateView = () => {
     );
 };
 
-export default AnnouncementCreateView;
+async function getUser(id) {
+    // const res = await axios({
+    //     method: "get",
+    //     url: `/api/research/post/${id}`,
+    //     headers: { "Content-Type": "application/json" },
+    // });
+    // return res.data;
+}
+
+export default EditUserView;
