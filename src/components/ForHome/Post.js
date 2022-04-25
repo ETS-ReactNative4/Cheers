@@ -81,7 +81,7 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
         <BoxContainer>
             {/* Only if the post belongs to the user that is logged in or is admin */}
             {/* {localStorage.token && ( */}
-            {user === currentUser.user_name || currentUser.is_admin === 1 && (
+            {((user === currentUser.user_name) || (currentUser.is_admin === 1)) && (
                 <div className={classes.buttonContainer}>
                     <Fragment>
                         <Delete deleteEndpoint={`/api/post/${post_id}`} />
