@@ -89,21 +89,14 @@ const AnnouncementCreateView = () => {
             return;
         }
 
-        const current = new Date();
-        const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+        // const current = new Date();
+        // const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+        let body = {title, user, content: message};
 
-        // Create form object and send request
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("user", user);
-        formData.append("ingredients", message);
-        formData.append("date", date);
-
-
-        // axios
-        //     .post("/api/research", formData)
-        //     .then((res) => console.log("saved! " + res.data))
-        //     .catch((err) => console.log(err));
+        axios
+            .post("/api/messages", body)
+            .then((res) => console.log("saved! " + res.data))
+            .catch((err) => console.log(err));
 
         window.location.href = "/";
     }
@@ -122,14 +115,14 @@ const AnnouncementCreateView = () => {
                     onChange={(e) => setTitle(e.target.value)}
                 />
 
-                <TextField
+                {/* <TextField
                     error={isEmptyField(user)}
                     helperText={isEmptyField(user) ? "Required field" : ""}
                     variant="outlined"
                     placeholder="User"
                     className={classes.textField}
                     onChange={(e) => setUser(e.target.value)}
-                />
+                /> */}
 
                 <TextField
                     error={isEmptyField()}
