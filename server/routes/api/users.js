@@ -200,4 +200,69 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
+// @route   GET api/users
+// @desc    Get all users
+// @access  Private
+router.get("/", auth, async (req, res) => {
+  try {
+  //   const posts = await Post.find().sort({ date: -1 }); // -1 is sort by most recent
+    mysqlPool.getConnection(function(err, mclient) {
+      let sql = `SELECT users.user_name, users.email, users.first_name, users.last_name, users.is_admin
+      FROM users`;
+      mclient.query(sql, async (err, resp) => {
+          if (err) {
+              throw err;
+          }
+          mclient.release();
+          res.json(resp);
+      })
+  });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   DELETE api/users/:id
+// @desc    Delete user with id
+// @access  Private
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    // Get user from auth middleware which returned the user's user_name and make sure they are admin
+    mysqlPool.getConnection(function (err, mclient) {
+      let sql = `SELECT * FROM users WHERE user_name="${req.user.id}"`;
+      mclient.query(sql, async (err, resp) => {
+        if (err) {
+          throw err;
+        }
+        if (resp.length === 0) {
+          mclient.release();
+          return res
+            .status(400)
+            .json({ errors: [{ msg: "User doesn't exist" }] });
+        }
+        if (resp[0].is_admin == 0) {
+          mclient.release();
+          return res
+            .status(400)
+            .json({ errors: [{ msg: "User is not an admin" }] });
+        }
+
+        // Delete user with req.params.id
+        sql = `DELETE FROM users WHERE user_name = "${req.params.id}"`;
+        mclient.query(sql, async (err, resp) => {
+          if (err) {
+            throw err;
+          }
+          mclient.release();
+          return res.json(resp);
+        });
+      });
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
