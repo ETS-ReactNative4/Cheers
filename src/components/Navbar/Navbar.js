@@ -30,11 +30,16 @@ function Navbar({ toggle }) {
                     <NavLink to="/" activeStlye>
                         Home
                     </NavLink>
+
+                    
                     {!localStorage.token && (
                         <NavLink to="/signup" activeStlye>
                             Sign Up
                         </NavLink> 
                     )}
+                    <NavLink to="/reports" activeStlye>
+                        Reports
+                    </NavLink>
                 </NavMenu>
                 {!localStorage.token && (
                     <NavBtn>

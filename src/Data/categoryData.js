@@ -1,7 +1,18 @@
 export const categoryData = [
+    "Wine",
+    "Cognac",
     "Whiskey",
-    "Mixed Drink",
-    "Non-Alcoholic",
+    "Liqueur",
+    "Absinthe",
+    "Rum",
+    "Tequila",
     "Beer",
+    "Vermouth",
+    "Vodka",
+    "Sangria",
+    "Gin",
+    "Chocolate liquer",
+    "Mixed",
+    "Original",
     "Other"
 ];

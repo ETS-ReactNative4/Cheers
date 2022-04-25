@@ -43,12 +43,13 @@ const SignUpForm = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState("false");
     const [ofAge, setOfAge] = useState(false);
     const [valid, setValid] = useState(true);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+
         const credentials = { user_name: userName, email, first_name: firstName, last_name: lastName, password, is_admin: 0 };
         await signUp(credentials);
     }

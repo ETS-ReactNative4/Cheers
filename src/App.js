@@ -3,22 +3,14 @@ import styled from "styled-components";
 import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-// import ResearchPage from "./pages/ResearchPage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-// import AboutPage from "./pages/AboutPage";
-// import PublicationsPage from "./pages/PublicationsPage";
-// import ContactPage from "./pages/ContactPage";
-// import Sidebar from "./components/Sidebar/Sidebar";
 import GlobalStyle from "./globalStyles";
 import Footer from "./components/Footer/Footer";
-// import DetailView from "./components/Research/post/DetailView";
 import PostCreateView from "./components/ForHome/PostCreateView";
-// import ResearchEditView from "./components/Research/post/ResearchEditView";
-// import PublicationCreateView from "./components/Publications/post/PublicationCreateView";
-// import PublicationEditView from "./components/Publications/post/PublicationEditView";
-// import AboutCreateView from "./components/AboutData/AboutCreateView";
-// import AboutEditView from "./components/AboutData/AboutEditView";
+import EditView from "./components/ForHome/EditView";
+import Reports from "./pages/Reports";
+
 // import UpdateView from "./components/Research/post/Updateview";
 import setAuthToken from "./utils/setAuthToken";
 
@@ -66,6 +58,10 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/create" exact component={PostCreateView} />
+            <Route path="/edit" exact component={EditView} />
+            <Route path="/reports" exact component={Reports} />
+
+
             {/* <Route path="/research" exact component={ResearchPage} />
             <Route path="/about" exact component={AboutPage} />
             <Route path="/publications" exact component={PublicationsPage} />

@@ -18,6 +18,7 @@ const Posts = (props) => {
                 category={post.category_name}
                 ingredients={post.ingredients}
                 instructions={post.instructions}
+            // id={post.id}
             />
         </Grid>
     ));
