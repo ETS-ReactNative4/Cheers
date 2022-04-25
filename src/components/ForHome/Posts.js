@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import { Grid } from "@material-ui/core";
 import Post from "./Post";
 
 //Posts component
 const Posts = (props) => {
+    const [user, setUser] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+        // Get data
+        const res = await getUserFromDatabase();
+        setUser(res[0]);
+        }
+        if (localStorage.token) {
+            fetchData();
+        }
+    }, []);
+
     console.log(props.posts)
     return props.posts.map((post, index) => (
         <Grid key={index} item md={4} sm={6} xs={12}>
 
             <Post
+                currentUser={user}
+                post_id={post.post_id}
                 recipe_id={post.recipe_id}
                 user={post.user_name}
                 title={post.title}
@@ -23,5 +38,14 @@ const Posts = (props) => {
         </Grid>
     ));
 };
+
+async function getUserFromDatabase() {
+    const res = await axios({
+      method: "get",
+      url: "/api/auth",
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data;
+  }
 
 export default Posts;
