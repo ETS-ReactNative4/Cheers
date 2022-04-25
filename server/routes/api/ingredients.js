@@ -17,6 +17,7 @@ router.get("/", auth, async (req, res) => {
             if (err) {
                 throw err;
             }
+            mclient.release();
             res.json(resp);
         })
     });
@@ -24,6 +25,32 @@ router.get("/", auth, async (req, res) => {
       console.error(err.message);
       res.status(500).send("Server Error");
     }
+});
+
+// @route   GET api/ingredients/:id
+// @desc    Get all ingredients used in a recipe
+// @access  Private
+router.get("/:id", auth, async (req, res) => {
+  try {
+    // console.log(req.params.id)
+    mysqlPool.getConnection(function(err, mclient) {
+      let sql = `SELECT ingredients.ingredient_name, uses.recipe_id
+      FROM ingredients,uses
+      WHERE ingredients.id = uses.ingredient_id
+      AND uses.recipe_id = ${req.params.id}`;
+      mclient.query(sql, async (err, resp) => {
+          if (err) {
+              throw err;
+          }
+          let ingredients = resp.map(ingredient => ingredient.ingredient_name)
+          mclient.release();
+          res.json(ingredients);
+      })
+  });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 module.exports = router;

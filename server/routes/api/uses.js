@@ -17,6 +17,7 @@ router.get("/", auth, async (req, res) => {
             if (err) {
                 throw err;
             }
+            mclient.release();
             res.json(resp);
         })
     });

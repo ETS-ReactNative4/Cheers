@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Typography, makeStyles, Button } from "@material-ui/core";
 import styled from "styled-components";
+import axios from "axios";
 // import LinesEllipsis from 'react-lines-ellipsis'
 // import { Link } from "react-router-dom";
 // import EditIcon from '@mui/icons-material/Edit';
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
     },
     image: {
         width: "100%",
-        maxHeight: "20rem",
+        height: "20rem",
         objectFit: "cover",
         borderRadius: "25px",
         marginTop: "0.4rem"
@@ -59,8 +61,19 @@ const useStyles = makeStyles({
 });
 
 //Individual Post component
-const Post = ({ title, user, rating, ingredients, instructions, id, img, date }) => {
+const Post = ({ title, user, rating, category, instructions, recipe_id, img, date }) => {
     const classes = useStyles();
+    const [ingredients, setIngredients] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+          // Get data
+          const resIngredients = await getIngredientsFromDatabase(recipe_id);
+          setIngredients(resIngredients);
+        }
+        fetchData();
+      }, []);
+
+    
 
     return (
         <BoxContainer>
@@ -91,7 +104,8 @@ const Post = ({ title, user, rating, ingredients, instructions, id, img, date })
                 <Typography className={classes.text}>USER: {user}</Typography>
                 <Typography className={classes.text}>DATE: {date}</Typography>
                 <Typography className={classes.text}>RATING: {rating} / 5</Typography>
-                <Typography className={classes.detail}>INGREDIENTS: {ingredients}</Typography>
+                <Typography className={classes.text}>CATEGORY: {category.replace("_"," ")}</Typography>
+                <Typography className={classes.detail}>INGREDIENTS: {String(ingredients)}</Typography>
                 <Typography className={classes.detail}>INSTRUCTIONS: {instructions}</Typography>
                 {/* <LinesEllipsis
                 text={text}
@@ -105,6 +119,15 @@ const Post = ({ title, user, rating, ingredients, instructions, id, img, date })
         </BoxContainer>
     );
 };
+
+async function getIngredientsFromDatabase(recipe_id) {
+    const res = await axios({
+      method: "get",
+      url: `/api/ingredients/${recipe_id}`,
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data;
+  }
 
 const BoxContainer = styled.div`
     transition: all .3s ease-in-out;

@@ -2,19 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // Connect database
-var mysqlPool = require("./mysqlPool");
-mysqlPool.getConnection(function(err, mclient) {
-    if (err) {
-      throw err;
-    }
-    let sql = "SELECT user_name FROM users";
-    mclient.query(sql, (err, resp) => {
-        if (err) {
-            throw err;
-        }
-        console.log(resp);
-    })
-});
+// var mysqlPool = require("./mysqlPool");
+// mysqlPool.getConnection(function(err, mclient) {
+//     if (err) {
+//       throw err;
+//     }
+//     let sql = "SELECT user_name FROM users";
+//     mclient.query(sql, (err, resp) => {
+//         if (err) {
+//             throw err;
+//         }
+//         console.log(resp);
+//     })
+// });
 
 
 const app = express();
