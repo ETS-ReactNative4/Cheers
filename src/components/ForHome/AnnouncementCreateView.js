@@ -104,6 +104,8 @@ const AnnouncementCreateView = () => {
         //     .post("/api/research", formData)
         //     .then((res) => console.log("saved! " + res.data))
         //     .catch((err) => console.log(err));
+
+        window.location.href = "/";
     }
 
     return (
