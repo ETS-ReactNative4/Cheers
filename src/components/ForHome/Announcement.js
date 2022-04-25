@@ -20,6 +20,7 @@ const useStyles = makeStyles({
 const Announcement = ({ name, topic, message, date, id }) => {
   const classes = useStyles();
 
+
   return (
     <CardStyled>
       <div className="content">

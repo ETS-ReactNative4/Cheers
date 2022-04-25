@@ -17,11 +17,12 @@ const PostLayout = () => {
     fetchData();
   }, []);
 
+
   return (
     <>
       <Grid container>
         <Grid item md={2} xs={12} sm={2}>
-          <Filter filters={filterData} createLink={"/create"} setPosts={setPosts} getPostsFromDatabase={getPostsFromDatabase}/>
+          <Filter filters={filterData} createLink={"/create"} setPosts={setPosts} getPostsFromDatabase={getPostsFromDatabase} />
         </Grid>
         <Grid container item md={10} xs={12} sm={10}>
           <Posts posts={posts} />

@@ -79,6 +79,7 @@ const EditUserView = () => {
         return !str || !str.trim().length;
     }
 
+
     const validate = () => {
         let isValid = true;
         if (isEmptyField(newFirstName)) { isValid = false }

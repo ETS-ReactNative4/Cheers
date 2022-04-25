@@ -65,6 +65,7 @@ function Navbar({ toggle }) {
                             <Button
                                 variant="outlined"
                                 startIcon={<SettingsIcon />}
+
                                 size="small"
                                 style={{ backgroundColor: "#F0F0F0" }}
                             >
