@@ -28,6 +28,33 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// @route   GET api/posts/my
+// @desc    Get my posts
+// @access  Private
+router.get("/my", auth, async (req, res) => {
+  try {
+    mysqlPool.getConnection(function (err, mclient) {
+      let sql = `SELECT posts.post_id, posts.star_num, posts.post_date, posts.title, posts.user_name, 
+      recipes.recipe_id, recipes.instructions, drink_category.category_name
+      FROM posts,recipes,drink_category
+      WHERE posts.post_id = recipes.post_id
+      AND drink_category.id = recipes.category_id
+      AND posts.user_name = "${req.user.id}"
+      ORDER BY post_date ASC`;
+      mclient.query(sql, async (err, resp) => {
+        if (err) {
+          throw err;
+        }
+        mclient.release();
+        res.json(resp);
+      });
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   GET api/posts/all
 // @desc    Get all posts with recipe and ingredient data joined
 // @access  Public
