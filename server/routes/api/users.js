@@ -50,6 +50,7 @@ router.post(
             throw err;
           }
           if (resp.length > 0) {
+            mclient.release();
             return res
               .status(400)
               .json({ errors: [{ msg: "User already exists" }] });
@@ -61,21 +62,21 @@ router.post(
           password = await bcrypt.hash(password, salt); // Creates a hash for the user's password
 
           // await user.save();  // Anything that uses a Promise, put await before it
-          mysqlPool.getConnection(function (err, mclient) {
-            let newUser = {
-              user_name,
-              first_name,
-              last_name,
-              email,
-              password,
-              is_admin,
-            };
-            let sql = `INSERT INTO users SET ?`;
-            mclient.query(sql, newUser, (err, resp) => {
-              if (err) {
-                throw err;
-              }
-            });
+
+          let newUser = {
+            user_name,
+            first_name,
+            last_name,
+            email,
+            password,
+            is_admin,
+          };
+          let sql = `INSERT INTO users SET ?`;
+          mclient.query(sql, newUser, (err, resp) => {
+            if (err) {
+              throw err;
+            }
+            mclient.release();
           });
 
           // Jsonwebtoken stuff
@@ -148,7 +149,7 @@ router.put(
               throw err;
             }
             mclient.release();
-            return res.json(resp)
+            return res.json(resp);
           });
         });
       });
@@ -158,5 +159,45 @@ router.put(
     }
   }
 );
+
+// @route   PUT api/users/:id
+// @desc    Change user with id to be an admin
+// @access  Private
+router.put("/:id", auth, async (req, res) => {
+  try {
+    // Get user from auth middleware which returned the user's user_name and make sure they are admin
+    mysqlPool.getConnection(function (err, mclient) {
+      let sql = `SELECT * FROM users WHERE user_name="${req.user.id}"`;
+      mclient.query(sql, async (err, resp) => {
+        if (err) {
+          throw err;
+        }
+        if (resp.length === 0) {
+          mclient.release();
+          return res
+            .status(400)
+            .json({ errors: [{ msg: "User doesn't exist" }] });
+        }
+        if (resp[0].is_admin == 0) {
+          mclient.release();
+          return res
+            .status(400)
+            .json({ errors: [{ msg: "User is not an admin" }] });
+        }
+        sql = `UPDATE users SET is_admin = 1 WHERE user_name = "${req.params.id}"`;
+        mclient.query(sql, async (err, resp) => {
+          if (err) {
+            throw err;
+          }
+          mclient.release();
+          return res.json(resp);
+        });
+      });
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;

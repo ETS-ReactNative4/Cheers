@@ -38,15 +38,6 @@ async function getPostsFromDatabase() {
     headers: { "Content-Type": "application/json" },
   });
   let posts = res.data
-//   let ingredients = await getIngredientsFromDatabase();
-//   posts.forEach(post => {
-//       post.ingredients = [];
-//     ingredients.forEach(ingredient => {
-//         if (post.recipe_id === ingredient.recipe_id) {
-//             post.ingredients.push(ingredient);
-//         }
-//     });
-//   });
   return posts;
 }
 
