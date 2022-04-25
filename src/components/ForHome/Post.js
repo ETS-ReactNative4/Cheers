@@ -84,7 +84,7 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
             {((user === currentUser.user_name) || (currentUser.is_admin === 1)) && (
                 <div className={classes.buttonContainer}>
                     <Fragment>
-                        <Delete deleteEndpoint={`/api/post/${post_id}`} />
+                        <Delete deleteEndpoint={`/api/posts/${post_id}`} />
                         <Link
                             to={`/edit/${post_id}`}
                             style={{ textDecoration: "none", color: "inherit" }}
