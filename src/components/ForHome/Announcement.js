@@ -27,7 +27,7 @@ const Announcement = ({ name, topic, message, date, id }) => {
           <div className={classes.buttonContainer}>
             {/* <Delete deleteEndpoint={`/api/about/${id}`} /> */}
             <Link
-              to={`/about/edit/${id}`}
+              to={`/announcementCreateView`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Button
