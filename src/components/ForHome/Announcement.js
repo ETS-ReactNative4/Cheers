@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Typography, makeStyles, Button } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import axios from "axios";
 //import Delete from '../Delete/Delete';
+import axios from "axios";
+
 
 const useStyles = makeStyles({
   buttonContainer: {
@@ -18,53 +19,24 @@ const useStyles = makeStyles({
 });
 
 
-const Announcement = ({ name, topic, date, id }) => {
+const Announcement = ({ name, topic, message, date, id }) => {
   const classes = useStyles();
+  const [isAdmin, setIsAdmin] = useState(0);
 
-  const [message, setMessage] = useState([]);
-  const [user, setUser] = useState([]);
   useEffect(() => {
     async function fetchUser() {
-      const resUser = await getUserFromDatabase();
-      setUser(resUser[0]);
+      const currUser = await getUserFromDatabase();
+      setIsAdmin(currUser[0].is_admin);
     }
-    if (localStorage.token) {
-      fetchUser();
-    }
+    fetchUser();
 
-    async function fetchData() {
-      // Get all messages in DB in order from latest to oldest
-      const resMessages = await getMessagesFromDatabase(); 
-      setMessage(resMessages[0]); // Only display latest announcement
-    }
-    fetchData();
-  }, []);
-
-  async function getMessagesFromDatabase() {
-    const res = await axios({
-      method: "get",
-      url: "/api/messages",
-      headers: { "Content-Type": "application/json" },
-    });
-    let posts = res.data
-    return posts;
-  }
-
-  async function getUserFromDatabase() {
-    const res = await axios({
-      method: "get",
-      url: "/api/auth",
-      headers: { "Content-Type": "application/json" },
-    });
-    return res.data;
-  }
+  }, [])
 
   return (
     <CardStyled>
       <div className="content">
-        {(localStorage.token && user.is_admin === 1) && (
+        {(localStorage.token && isAdmin === 1) && (
           <div className={classes.buttonContainer}>
-            {/* <Delete deleteEndpoint={`/api/about/${id}`} /> */}
             <Link
               to={`/announcementCreateView`}
               style={{ textDecoration: "none", color: "inherit" }}
@@ -73,9 +45,6 @@ const Announcement = ({ name, topic, date, id }) => {
                 variant="outlined"
                 startIcon={<EditIcon />}
                 size="small"
-                onClick={() => {
-                  console.log("edit");
-                }}
               >
                 New Announcement
               </Button>
@@ -84,16 +53,25 @@ const Announcement = ({ name, topic, date, id }) => {
         )}
 
         <h2>Announcement</h2>
-        <h3>{message.title}</h3>
-        <h4>{new Date(message.time_posted).toDateString()}</h4>
+        <h3>Topic: {topic}</h3>
+        <h4>Date: {date}</h4>
         <p>
-          <strong>Message from {message.user_name}:</strong> {message.content}
+          <strong>Message from {name}:</strong> {message}
         </p>
 
       </div>
 
     </CardStyled>
   );
+}
+
+async function getUserFromDatabase() {
+  const res = await axios({
+    method: "get",
+    url: "api/auth",
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.data;
 }
 
 const CardStyled = styled.div`

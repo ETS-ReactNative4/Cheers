@@ -19,19 +19,24 @@ function HomePage(prop) {
     const [message, setMessage] = useState("");
 
 
+
     useEffect(() => {
+
         async function fetchData() {
             // Get data
             const announcements = await getAnnouncementsFromDatabase();
-            announcements.sort((a, b) => a.time_posted.localeCompare(b.time_posted));
+            announcements.sort((a, b) => b.time_posted.localeCompare(a.time_posted));
             const mostRecentAnnoucement = announcements[0];
             setUserName(mostRecentAnnoucement.user_name);
             setTitle(mostRecentAnnoucement.title);
             setMessage(mostRecentAnnoucement.content);
             setDate(new Date(mostRecentAnnoucement.time_posted).toDateString());
-            console.log(announcements[0].title);
+
         }
+
         fetchData();
+
+
     }, []);
 
     return (
@@ -59,6 +64,8 @@ async function getAnnouncementsFromDatabase() {
     });
     return res.data;
 }
+
+
 
 const AnnouncementContainer = styled.div`
     display: flex;
