@@ -10,13 +10,13 @@ var mysqlPool = require("../../mysqlPool");
 // @access  Private
 router.get("/", auth, async (req, res) => {
   try {
-    //   const posts = await Post.find().sort({ date: -1 }); // -1 is sort by most recent
     mysqlPool.getConnection(function (err, mclient) {
       let sql = `SELECT * FROM messages`;
       mclient.query(sql, async (err, resp) => {
         if (err) {
           throw err;
         }
+        mclient.release();
         res.json(resp);
       });
     });

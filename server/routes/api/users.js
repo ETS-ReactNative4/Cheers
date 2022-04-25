@@ -147,6 +147,7 @@ router.put(
             if (err) {
               throw err;
             }
+            mclient.release();
             return res.json(resp)
           });
         });

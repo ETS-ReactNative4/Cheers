@@ -20,11 +20,11 @@ import PostCreateView from "./components/ForHome/PostCreateView";
 // import AboutCreateView from "./components/AboutData/AboutCreateView";
 // import AboutEditView from "./components/AboutData/AboutEditView";
 // import UpdateView from "./components/Research/post/Updateview";
-// import setAuthToken from "./utils/setAuthToken";
+import setAuthToken from "./utils/setAuthToken";
 
-// if (localStorage.token) {
-//   setAuthToken(localStorage.token);
-// }
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 function App() {
   // Use state for toggling hamburger menu
