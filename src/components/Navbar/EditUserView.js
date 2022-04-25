@@ -104,6 +104,8 @@ const EditUserView = () => {
             //.put(`/api/post/${postId}`, body) CHANGE
             .then((res) => console.log("saved! " + res.data))
             .catch((err) => console.log(err));
+
+        window.location.href = "/";
     }
 
     return (

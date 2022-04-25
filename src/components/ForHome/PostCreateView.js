@@ -122,6 +122,8 @@ const PostCreateView = () => {
       isValid = false;
     } else if (isEmptyField(instructions)) {
       isValid = false;
+    } else if (isEmptyField(rating)) {
+      isValid = false;
     }
 
     setValid(isValid);
@@ -136,27 +138,13 @@ const PostCreateView = () => {
     }
 
     const current = new Date().toISOString();
-    // const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
 
-    // Create form object and send request
-    // const formData = new FormData();
-    // formData.append("title", title);
-    // formData.append("user", user.user_name);
-    // formData.append("ingredients", ingredients);
-    // formData.append("date", current);
-    // formData.append("category", drinkCategory);
-    // formData.append("instructions", instructions);
-
-    // // setRating(0);
-    // // const newRating = rating.toString() + ' / 5';
-    // // formData.append("rating", newRating);
-    // formData.append("star_num", 0);
-    let formattedIngredients = ingredients.split(" ");
+    let formattedIngredients = ingredients.split(", ");
     let outerArray = []
     formattedIngredients.forEach(ingredient => {
-        let innerArray = [];
-        innerArray.push(ingredient);
-        outerArray.push(innerArray);
+      let innerArray = [];
+      innerArray.push(ingredient.replace(",", " "));
+      outerArray.push(innerArray);
     })
 
     let formData = {
@@ -166,13 +154,15 @@ const PostCreateView = () => {
       date: current,
       category: drinkCategory,
       instructions,
-      star_num: 0
+      star_num: rating
     };
 
     axios
       .post("/api/posts", formData)
       .then((res) => console.log("saved! " + res.data))
       .catch((err) => console.log(err));
+
+    window.location.href = "/";
   };
 
   return (
@@ -189,6 +179,15 @@ const PostCreateView = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
 
+        <TextField
+          error={isEmptyField(rating)}
+          helperText={isEmptyField(rating) ? "Required field" : ""}
+          variant="outlined"
+          placeholder="User rating from 0 ~ 5"
+          className={classes.textField}
+          onChange={(e) => setRating(e.target.value)}
+        />
+
         {/* <TextField
                     error={isEmptyField(user)}
                     helperText={isEmptyField(user) ? "Required field" : ""}
@@ -203,7 +202,7 @@ const PostCreateView = () => {
           helperText={isEmptyField(ingredients) ? "Required field" : ""}
           multiline
           variant="outlined"
-          placeholder="Ingredients..."
+          placeholder="Ingredients... Format: ingredient 1, ingredient 2, ingredient 3"
           className={classes.textField}
           onChange={(e) => setIngredients(e.target.value)}
         />

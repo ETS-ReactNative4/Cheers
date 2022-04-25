@@ -112,6 +112,8 @@ const EditView = () => {
             .put(`/api/post/${postId}`, body)
             .then((res) => console.log("saved! " + res.data))
             .catch((err) => console.log(err));
+
+        window.location.href = "/";
     }
 
     return (
