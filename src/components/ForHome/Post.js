@@ -67,12 +67,12 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
     const [ingredients, setIngredients] = useState([]);
     useEffect(() => {
         async function fetchData() {
-          // Get data
-          const resIngredients = await getIngredientsFromDatabase(recipe_id);
-          setIngredients(resIngredients);
+            // Get data
+            const resIngredients = await getIngredientsFromDatabase(recipe_id);
+            setIngredients(resIngredients);
         }
         fetchData();
-      }, []);
+    }, []);
 
     //   console.log(`${user} comparing to ${currentUser.user_name}`)
     //   console.log(user === currentUser.user_name || currentUser.is_admin === 1)
@@ -81,7 +81,7 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
         <BoxContainer>
             {/* Only if the post belongs to the user that is logged in or is admin */}
             {/* {localStorage.token && ( */}
-            {user === currentUser.user_name || currentUser.is_admin === 1 && (
+            {((user === currentUser.user_name) || (currentUser.is_admin === 1)) && (
                 <div className={classes.buttonContainer}>
                     <Fragment>
                         <Delete deleteEndpoint={`/api/post/${post_id}`} />
@@ -111,7 +111,7 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
                 <Typography className={classes.text}>USER: {user}</Typography>
                 <Typography className={classes.text}>DATE: {date}</Typography>
                 <Typography className={classes.text}>RATING: {rating} / 5</Typography>
-                <Typography className={classes.text}>CATEGORY: {category.replace("_"," ")}</Typography>
+                <Typography className={classes.text}>CATEGORY: {category.replace("_", " ")}</Typography>
                 <Typography className={classes.detail}>INGREDIENTS: {String(ingredients)}</Typography>
                 <Typography className={classes.detail}>INSTRUCTIONS: {instructions}</Typography>
                 {/* <LinesEllipsis
@@ -129,12 +129,12 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
 
 async function getIngredientsFromDatabase(recipe_id) {
     const res = await axios({
-      method: "get",
-      url: `/api/ingredients/${recipe_id}`,
-      headers: { "Content-Type": "application/json" },
+        method: "get",
+        url: `/api/ingredients/${recipe_id}`,
+        headers: { "Content-Type": "application/json" },
     });
     return res.data;
-  }
+}
 
 const BoxContainer = styled.div`
     transition: all .3s ease-in-out;
