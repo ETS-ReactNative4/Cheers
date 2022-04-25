@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { FaBars } from 'react-icons/fa';
 import { Nav, NavLink, NavMenu, NavBtn, NavBtnLink, NavLogo, MobileIcon, NavIcon } from './NavbarElements'
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Button } from "@material-ui/core";
+
 
 function Navbar({ toggle }) {
     const [user, setUser] = useState({});
     useEffect(() => {
         async function fetchData() {
-        // Get data
-        const res = await getUserFromDatabase();
-        setUser(res[0]);
+            // Get data
+            const res = await getUserFromDatabase();
+            setUser(res[0]);
         }
         if (localStorage.token) {
             fetchData();
         }
     }, []);
-  
+
     return (
         <>
             <Nav>
@@ -31,13 +35,13 @@ function Navbar({ toggle }) {
                         Home
                     </NavLink>
 
-                    
+
                     {!localStorage.token && (
                         <NavLink to="/signup" activeStlye>
                             Sign Up
-                        </NavLink> 
+                        </NavLink>
                     )}
-                    { user.is_admin === 1 && (
+                    {user.is_admin === 1 && (
                         <NavLink to="/reports" activeStlye>
                             Reports
                         </NavLink>
@@ -54,8 +58,24 @@ function Navbar({ toggle }) {
                         <NavBtnLink to="/" onClick={() => logout()}>
                             Log Out
                         </NavBtnLink>
+                        <Link
+                            //to={`/edit/${post_id}`}
+                            style={{ textDecoration: "none", color: "white", padding: "1rem" }}
+                        >
+                            <Button
+                                variant="outlined"
+                                startIcon={<SettingsIcon />}
+                                size="small"
+                                style={{ backgroundColor: "#F0F0F0" }}
+                            >
+                                Settings
+                            </Button>
+                        </Link>
                     </NavBtn>
                 )}
+
+                {/* Settings button to change user password */}
+
             </Nav>
         </>
     );
@@ -63,12 +83,12 @@ function Navbar({ toggle }) {
 
 async function getUserFromDatabase() {
     const res = await axios({
-      method: "get",
-      url: "/api/auth",
-      headers: { "Content-Type": "application/json" },
+        method: "get",
+        url: "/api/auth",
+        headers: { "Content-Type": "application/json" },
     });
     return res.data;
-  }
+}
 
 const logout = () => {
     localStorage.removeItem("token");
