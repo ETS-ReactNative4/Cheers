@@ -75,7 +75,6 @@ const AnnouncementCreateView = () => {
     const validate = () => {
         let isValid = true;
         if (isEmptyField(title)) { isValid = false }
-        else if (isEmptyField(user)) { isValid = false }
         else if (isEmptyField(message)) { isValid = false }
 
         setValid(isValid);
@@ -91,7 +90,7 @@ const AnnouncementCreateView = () => {
 
         // const current = new Date();
         // const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
-        let body = {title, user, content: message};
+        let body = { title, user, content: message };
 
         axios
             .post("/api/messages", body)
@@ -114,15 +113,6 @@ const AnnouncementCreateView = () => {
                     className={classes.textField}
                     onChange={(e) => setTitle(e.target.value)}
                 />
-
-                {/* <TextField
-                    error={isEmptyField(user)}
-                    helperText={isEmptyField(user) ? "Required field" : ""}
-                    variant="outlined"
-                    placeholder="User"
-                    className={classes.textField}
-                    onChange={(e) => setUser(e.target.value)}
-                /> */}
 
                 <TextField
                     error={isEmptyField()}

@@ -8,16 +8,15 @@ const Posts = (props) => {
     const [user, setUser] = useState([]);
     useEffect(() => {
         async function fetchData() {
-        // Get data
-        const res = await getUserFromDatabase();
-        setUser(res[0]);
+            // Get data
+            const res = await getUserFromDatabase();
+            setUser(res[0]);
         }
         if (localStorage.token) {
             fetchData();
         }
     }, []);
 
-    console.log(props.posts)
     return props.posts.map((post, index) => (
         <Grid key={index} item md={4} sm={6} xs={12}>
 
@@ -41,9 +40,9 @@ const Posts = (props) => {
 
 async function getUserFromDatabase() {
     const res = await axios({
-      method: "get",
-      url: "/api/auth",
-      headers: { "Content-Type": "application/json" },
+        method: "get",
+        url: "/api/auth",
+        headers: { "Content-Type": "application/json" },
     });
     return res.data;
 }
