@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import { FaBars } from 'react-icons/fa';
 import { Nav, NavLink, NavMenu, NavBtn, NavBtnLink, NavLogo, MobileIcon, NavIcon } from './NavbarElements'
 
 function Navbar({ toggle }) {
+    const [user, setUser] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+        // Get data
+        const res = await getUserFromDatabase();
+        setUser(res[0]);
+        }
+        if (localStorage.token) {
+            fetchData();
+        }
+    }, []);
+  
     return (
         <>
             <Nav>
@@ -17,9 +30,13 @@ function Navbar({ toggle }) {
                     <NavLink to="/" activeStlye>
                         Home
                     </NavLink>
-                    <NavLink to="/signup" activeStlye>
-                        Sign Up
-                    </NavLink>
+
+                    
+                    {!localStorage.token && (
+                        <NavLink to="/signup" activeStlye>
+                            Sign Up
+                        </NavLink> 
+                    )}
                     <NavLink to="/reports" activeStlye>
                         Reports
                     </NavLink>
@@ -31,7 +48,7 @@ function Navbar({ toggle }) {
                 )}
                 {localStorage.token && (
                     <NavBtn>
-                        <div style={{ color: "white" }}>Admin logged in</div>
+                        <div style={{ color: "white" }}>{user ? `${user.user_name} logged in` : ""}</div>
                         <NavBtnLink to="/" onClick={() => logout()}>
                             Log Out
                         </NavBtnLink>
@@ -41,6 +58,15 @@ function Navbar({ toggle }) {
         </>
     );
 };
+
+async function getUserFromDatabase() {
+    const res = await axios({
+      method: "get",
+      url: "/api/auth",
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data;
+  }
 
 const logout = () => {
     localStorage.removeItem("token");

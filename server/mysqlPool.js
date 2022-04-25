@@ -8,7 +8,6 @@ exports.getConnection = function(callback) {
       if(err) {
         return callback(err);
       }
-      console.log("SQL Connected!");
       callback(err, conn);
     });
 };

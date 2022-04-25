@@ -49,7 +49,8 @@ const SignUpForm = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const credentials = { userName, firstName, lastName, email, password, isAdmin };
+
+        const credentials = { user_name: userName, email, first_name: firstName, last_name: lastName, password, is_admin: 0 };
         await signUp(credentials);
     }
 

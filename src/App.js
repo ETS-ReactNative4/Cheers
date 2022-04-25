@@ -12,11 +12,11 @@ import EditView from "./components/ForHome/EditView";
 import Reports from "./pages/Reports";
 
 // import UpdateView from "./components/Research/post/Updateview";
-// import setAuthToken from "./utils/setAuthToken";
+import setAuthToken from "./utils/setAuthToken";
 
-// if (localStorage.token) {
-//   setAuthToken(localStorage.token);
-// }
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 function App() {
   // Use state for toggling hamburger menu
