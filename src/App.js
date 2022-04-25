@@ -11,7 +11,6 @@ import PostCreateView from "./components/ForHome/PostCreateView";
 import EditView from "./components/ForHome/EditView";
 import Reports from "./pages/Reports";
 
-// import UpdateView from "./components/Research/post/Updateview";
 import setAuthToken from "./utils/setAuthToken";
 
 if (localStorage.token) {

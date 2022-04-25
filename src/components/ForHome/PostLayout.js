@@ -41,18 +41,4 @@ async function getPostsFromDatabase() {
   return posts;
 }
 
-async function filterResearchPostsFromDatabase(category) {
-  // let body = { category: "" };
-  // if (category) {
-  //     body.category = category;
-  // }
-  // const res = await axios({
-  //     method: 'post',
-  //     url: "/api/research/category",
-  //     headers: { "Content-Type": "application/json" },
-  //     data: body
-  // });
-  // return res.data;
-}
-
 export default PostLayout;

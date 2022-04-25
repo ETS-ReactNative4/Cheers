@@ -43,13 +43,13 @@ const Filter = ({ filters, setPosts, filterPostsFromDatabase, getPostsFromDataba
     const classes = useStyles();
     return (
         <>
-            {/* {localStorage.token && ( */}
-            <Link to={createLink} className={classes.link}>
-                <Button variant="contained" className={classes.create}>
-                    New Post
-                </Button>
-            </Link>
-            {/* )} */}
+            {localStorage.token && (
+                <Link to={createLink} className={classes.link}>
+                    <Button variant="contained" className={classes.create}>
+                        New Post
+                    </Button>
+                </Link>
+            )}
 
             <Table className={classes.table}>
                 <TableHead>
