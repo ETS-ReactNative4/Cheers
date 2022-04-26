@@ -6,6 +6,7 @@ import Post from "./Post";
 //Posts component
 const Posts = (props) => {
     const [user, setUser] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
             // Get data
@@ -17,9 +18,10 @@ const Posts = (props) => {
         }
     }, []);
 
-    return props.posts.map((post, index) => (
-        <Grid key={index} item md={4} sm={6} xs={12}>
+    props.posts.sort((a, b) => a.post_date < b.post_date ? 1 : -1);
 
+    return props.posts.map((post, index) => (
+        <Grid key={index} item md={4} sm={6} xs={12} >
             <Post
                 currentUser={user}
                 post_id={post.post_id}

@@ -4,11 +4,9 @@ import axios from "axios";
 
 import Banner from '../components/Banner/Banner';
 import { homeBanner } from '../Data/bannerData';
-import { Grid } from "@material-ui/core";
 import Announcement from '../components/ForHome/Announcement';
 import styled from "styled-components";
 import PostLayout from '../components/ForHome/PostLayout';
-import { announcementData } from '../Data/announcementData';
 
 
 function HomePage(prop) {

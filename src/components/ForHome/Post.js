@@ -20,7 +20,6 @@ const useStyles = makeStyles({
         flexDirection: "column",
         backgroundColor: "rgb(255, 111, 97, 0.8)",
         boxShadow: "3px 3px 5px rgba(0,0,0, .4)",
-
         "& > *": {
             padding: "2px 12px",
         },
@@ -65,6 +64,7 @@ const useStyles = makeStyles({
 const Post = ({ title, user, rating, category, instructions, recipe_id, post_id, img, date, currentUser }) => {
     const classes = useStyles();
     const [ingredients, setIngredients] = useState([]);
+    const [usePadding, setUsePadding] = useState(false);
     useEffect(() => {
         async function fetchData() {
             // Get data
@@ -72,7 +72,13 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
             setIngredients(resIngredients);
         }
         fetchData();
-    }, []);
+
+        if ((user === currentUser.user_name) || (currentUser.is_admin === 1)) {
+            setUsePadding(true);
+        }
+    }, [currentUser.is_admin, currentUser.user_name, recipe_id, user]);
+
+
 
     //   console.log(`${user} comparing to ${currentUser.user_name}`)
     //   console.log(user === currentUser.user_name || currentUser.is_admin === 1)
@@ -81,7 +87,9 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
         <BoxContainer>
             {/* Only if the post belongs to the user that is logged in or is admin */}
             {/* {localStorage.token && ( */}
+
             {((user === currentUser.user_name) || (currentUser.is_admin === 1)) && (
+
                 <div className={classes.buttonContainer}>
                     <Fragment>
                         <Delete deleteEndpoint={`/api/posts/${post_id}`} />
@@ -104,7 +112,7 @@ const Post = ({ title, user, rating, category, instructions, recipe_id, post_id,
                 </div>
             )}
             {/* )} */}
-            <div className={classes.container}>
+            <div className={classes.container} style={!usePadding ? { marginTop: "4rem" } : {}}>
 
                 <img src={img} alt="wrapper" className={classes.image} />
                 <Typography className={classes.heading}>{title}</Typography>
