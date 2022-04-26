@@ -1,7 +1,7 @@
 # How to start the Cheers Application
 To start the Cheers Application, you will have to start 2 separate npm projects - one for the React front end and one for the Node back end that connects to the local MYSQL Database.
 
-First, make sure you import the SQL dump that was submitted with the project files into your local MYSQL server - as a result, you should have a database in your MYSQL Server named `cheers_db` with tables `drink_category, ingredients, messages, posts, recipes, users, uses`. Also, ensure your local MYSQL Server is running.
+First, make sure you import the SQL file that was submitted with the project files into your local MYSQL server - as a result, you should have the entire cheers_db schema with sample data - a database in your MYSQL Server named `cheers_db` with tables `drink_category, ingredients, messages, posts, recipes, users, uses`. Also, ensure your local MYSQL Server is running.
 
 ### Running the user interface:
 In the same directory as this README file, run the following commands:
