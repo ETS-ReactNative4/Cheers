@@ -88,9 +88,9 @@ const headCells = [
   },
   {
     id: 'postCount',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
-    label: 'Number of Posts',
+    label: 'Posts',
   },
 ];
 
@@ -443,7 +443,7 @@ export default function ReportsPage() {
                       <TableCell align="left">{row.last_name}</TableCell>
                       {/* <TableCell align="left">{row.password}</TableCell> */}
                       <TableCell align="left">{row.is_admin === 1 ? "Yes" : "No"}</TableCell>
-                      <TableCell align="left">{row.postCount ? row.postCount : 0}</TableCell>
+                      <TableCell align="left">{row.postCount ? row.postCount.toString() : "0"}</TableCell>
                     </TableRow>
                   );
                 })}
