@@ -269,28 +269,22 @@ export default function ReportsPage() {
         }
 
         async function fetchUsers() {
-          const res = await getUsersFromDatabase();
-          setRows(res);
-        }
-        fetchUsers();
+          const resp = await getUsersFromDatabase();
 
-        async function fetchNumPostsByUser() {
           const res = await getNumPostsByUser();
-          console.log(res)
           let numPosts = [];
-          rows.forEach((user) => {
+          resp.forEach((user) => {
             user.postCount = 0;
-            numPosts.push(user)
             for (let userPostCount of res) {
               if (userPostCount.user_name === user.user_name) {
                 user.postCount = userPostCount["COUNT(*)"];
-                break;
               }
             }
+            numPosts.push(user)
           })
           setRows(numPosts)
         }
-        fetchNumPostsByUser();
+        fetchUsers();
     }, []);
 
   async function getCurrentUserFromDatabase() {
