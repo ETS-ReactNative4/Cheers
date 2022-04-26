@@ -86,6 +86,12 @@ const headCells = [
     disablePadding: false,
     label: 'Administrator',
   },
+  {
+    id: 'postCount',
+    numeric: true,
+    disablePadding: false,
+    label: 'Number of Posts',
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -267,6 +273,24 @@ export default function ReportsPage() {
           setRows(res);
         }
         fetchUsers();
+
+        async function fetchNumPostsByUser() {
+          const res = await getNumPostsByUser();
+          console.log(res)
+          let numPosts = [];
+          rows.forEach((user) => {
+            user.postCount = 0;
+            numPosts.push(user)
+            for (let userPostCount of res) {
+              if (userPostCount.user_name === user.user_name) {
+                user.postCount = userPostCount["COUNT(*)"];
+                break;
+              }
+            }
+          })
+          setRows(numPosts)
+        }
+        fetchNumPostsByUser();
     }, []);
 
   async function getCurrentUserFromDatabase() {
@@ -282,6 +306,15 @@ export default function ReportsPage() {
     const res = await axios({
       method: "get",
       url: "/api/users",
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data;
+  }
+
+  async function getNumPostsByUser() {
+    const res = await axios({
+      method: "post",
+      url: "/api/posts/counts",
       headers: { "Content-Type": "application/json" },
     });
     return res.data;
@@ -410,6 +443,7 @@ export default function ReportsPage() {
                       <TableCell align="left">{row.last_name}</TableCell>
                       {/* <TableCell align="left">{row.password}</TableCell> */}
                       <TableCell align="left">{row.is_admin === 1 ? "Yes" : "No"}</TableCell>
+                      <TableCell align="left">{row.postCount ? row.postCount : 0}</TableCell>
                     </TableRow>
                   );
                 })}

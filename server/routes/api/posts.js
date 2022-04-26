@@ -110,6 +110,28 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
+// @route   POST api/posts/counts
+// @desc    Get number of posts made by each user
+// @access  Private
+router.post("/counts", auth, async (req, res) => {
+  try {
+    mysqlPool.getConnection(function (err, mclient) {
+      let sql = `SELECT user_name,COUNT(*) FROM posts GROUP BY user_name`;
+      // let sql = 'SELECT * from posts';
+      mclient.query(sql, async (err, resp) => {
+        if (err) {
+          throw err;
+        }
+        mclient.release();
+        res.json(resp);
+      });
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   POST api/posts
 // @desc    Create a recipe post
 // @access  Private
