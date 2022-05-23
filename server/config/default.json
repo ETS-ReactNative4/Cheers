@@ -1,10 +1,10 @@
 {
     "mysql": {
         "connectionLimit": 50,
-        "host": "localhost",
-        "user": "root",
-        "password": "INSERT YOUR PASSWORD HERE",
-        "database": "cheers_db"
+        "host": "us-cdbr-east-05.cleardb.net",
+        "user": "ba1eb85c79ea5f",
+        "password": "f85ccbfe",
+        "database": "heroku_8cc1c05f95fd889"
     },
     "jwtSecret": "mysecrettoken"
 }

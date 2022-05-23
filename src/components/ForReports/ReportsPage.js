@@ -163,6 +163,7 @@ const EnhancedTableToolbar = (props) => {
           headers: { "Content-Type": "application/json" },
         });
       });
+      // eslint-disable-next-line no-self-assign
       window.location.href = window.location.href;
     }
     catch (err) {
@@ -180,6 +181,7 @@ const EnhancedTableToolbar = (props) => {
           headers: { "Content-Type": "application/json" },
         });
       });
+      // eslint-disable-next-line no-self-assign
       window.location.href = window.location.href;
     }
     catch (err) {
@@ -256,36 +258,37 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function ReportsPage() {
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = React.useState({});
   const [rows, setRows] = React.useState([]);
-    React.useEffect(() => {
-        async function fetchData() {
-        // Get data
-        const res = await getCurrentUserFromDatabase();
-        setUser(res[0]);
-        }
-        if (localStorage.token) {
-            fetchData();
-        }
+  React.useEffect(() => {
+    async function fetchData() {
+      // Get data
+      const res = await getCurrentUserFromDatabase();
+      setUser(res[0]);
+    }
+    if (localStorage.token) {
+      fetchData();
+    }
 
-        async function fetchUsers() {
-          const resp = await getUsersFromDatabase();
+    async function fetchUsers() {
+      const resp = await getUsersFromDatabase();
 
-          const res = await getNumPostsByUser();
-          let numPosts = [];
-          resp.forEach((user) => {
-            user.postCount = 0;
-            for (let userPostCount of res) {
-              if (userPostCount.user_name === user.user_name) {
-                user.postCount = userPostCount["COUNT(*)"];
-              }
-            }
-            numPosts.push(user)
-          })
-          setRows(numPosts)
+      const res = await getNumPostsByUser();
+      let numPosts = [];
+      resp.forEach((user) => {
+        user.postCount = 0;
+        for (let userPostCount of res) {
+          if (userPostCount.user_name === user.user_name) {
+            user.postCount = userPostCount["COUNT(*)"];
+          }
         }
-        fetchUsers();
-    }, []);
+        numPosts.push(user)
+      })
+      setRows(numPosts)
+    }
+    fetchUsers();
+  }, []);
 
   async function getCurrentUserFromDatabase() {
     const res = await axios({
@@ -381,7 +384,7 @@ export default function ReportsPage() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected}/>
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
