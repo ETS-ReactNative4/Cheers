@@ -20,7 +20,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Init Middleware
-app.use(express.json( { extended: false }));
+app.use(express.json({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -42,3 +42,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log('Listening on port ' + PORT);
 });
+
+// mysql://ba1eb85c79ea5f:f85ccbfe@us-cdbr-east-05.cleardb.net/heroku_8cc1c05f95fd889?reconnect=true
