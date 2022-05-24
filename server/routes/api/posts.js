@@ -10,7 +10,7 @@ const moment = require("moment");
 // @route   GET api/posts
 // @desc    Get all posts
 // @access  Private
-router.get("https://cheers-application.herokuapp.com/", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     mysqlPool.getConnection(function (err, mclient) {
       let sql = `SELECT * FROM posts ORDER BY post_date ASC`;
