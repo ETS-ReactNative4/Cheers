@@ -26,6 +26,13 @@ If trouble with permissions when using root user, in a new terminal, go into the
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'your new password'; ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your new password';
 
+![image](https://user-images.githubusercontent.com/48611641/170758437-4827743f-9c4a-4d47-8752-93e3adac9be6.png)
+
+![image](https://user-images.githubusercontent.com/48611641/170759709-93d5bc8f-d218-447a-857d-45a1cb27b43c.png)
+
+![image](https://user-images.githubusercontent.com/48611641/170760093-aae051d8-eae8-44ca-b599-4d8a1358fca8.png)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
